@@ -2,8 +2,21 @@
 <html>
   <head>
     <title></title>
+    <script>
+      document.onload = function() {
+        searchParams = URLSearchParams();
+        for (const [k, v] of searchParams) {
+          text_element = document.createTextNode(k + ":" + v);
+          br_element = document.createElement("br");
+          document.getElementById("params").appendChild(text_element);
+          document.getElementById("params").appendChild(br_element);
+        }
+
+      };
+    </script>
   </head>
   <body>
     <h1>Hello World</h1>
+    <div id="params"></div>
   </body>
 </html>
