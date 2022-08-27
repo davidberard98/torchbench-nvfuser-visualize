@@ -3,20 +3,37 @@
   <head>
     <title></title>
     <script>
-      document.onload = function() {
-        searchParams = URLSearchParams();
-        for (const [k, v] of searchParams) {
-          text_element = document.createTextNode(k + ":" + v);
-          br_element = document.createElement("br");
-          document.getElementById("params").appendChild(text_element);
-          document.getElementById("params").appendChild(br_element);
+      function setDataMessage(msg) {
+        const dataElement = document.getElementById("data");
+        dataElement.appendChild(
+          document.createTextNode(msg)
+        );
+      }
+
+      function loadTableFromUrl(url) {
+        fetch(url)
+          .then(
+            async function(response) {
+              const text = await response.text();
+            })
+      }
+
+      window.onload = async function() {
+        const searchParams = (new URL(document.location)).searchParams;
+        if (!searchParams.has("url")) {
+          console.log("!has_url")
+          setDataMessage("No URL provided (e.g. ?url=[...])")
+          return;
         }
+        const url = searchParams.get("url");
+        setDataMessage("Loading from " + url);
+        loadTableFromUrl(url);
 
       };
     </script>
   </head>
   <body>
     <h1>Hello World</h1>
-    <div id="params"></div>
+    <div id="data"></div>
   </body>
 </html>
