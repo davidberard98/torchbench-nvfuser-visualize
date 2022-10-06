@@ -2,6 +2,13 @@
 <html>
   <head>
     <title></title>
+    <style>
+      .bordered_table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 3px;
+      }
+    </style>
     <script>
       function parseCsv(msg) {
         let as_array = msg.split("\n").map(x => x.split(";"));
@@ -38,13 +45,17 @@
               const dataElement = document.getElementById("data");
               dataElement.innerHTML = "";
               const tableElement = document.createElement("table");
+              tableElement.classList.add("bordered_table");
               dataElement.appendChild(tableElement);
               for (let i=0; i<as_csv.length; ++i) {
                 const row = as_csv[i];
                 const tr = document.createElement("tr");
+                tr.classList.add("bordered_table");
                 tableElement.appendChild(tr);
                 for (let j=0; j < row.length; ++j) {
-                  const td = document.createElement("td");
+                  let td_type = (i == 0 ? "th" : "td");
+                  const td = document.createElement(td_type);
+                  td.classList.add("bordered_table");
                   tr.appendChild(td);
                   let text = row[j].toString();
                   if (j == 3 && typeof row[j] === 'number') {
